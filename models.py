@@ -39,12 +39,12 @@ class NearEarthObject:
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
         self.designation = str(info['pdes'])
-        #if name exists store it otherwise None
-        self.name = str(info.get('name')) if info.get('name') else None #default to None
-        #if diameter exists store it as float otherwise float('nan')
+        # if name exists store it otherwise None
+        self.name = str(info.get('name')) if info.get('name') else None  # default to None
+        # if diameter exists store it as float otherwise float('nan')
         diameter_str = info.get('diameter')
         self.diameter = float(diameter_str) if diameter_str else float('nan')
-        #hazardous if 'pha' == 'Y'
+        # hazardous if 'pha' == 'Y'
         self.hazardous = info['pha'].strip().upper() == 'Y'
 
         # Create an empty initial collection of linked approaches.
@@ -65,7 +65,7 @@ class NearEarthObject:
                 f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})")
 
     def serialize(self):
-        '''Return a dictionary representation of the Close Approach for CSV/JSON output.'''
+        """Return a dictionary representation of the Close Approach for CSV/JSON output."""
         return {
             'designation': self.designation,
             'name': self.name or '',
@@ -87,15 +87,16 @@ class CloseApproach:
     private attribute, but the referenced NEO is eventually replaced in the
     `NEODatabase` constructor.
     """
+
     def __init__(self, info):
         """Create a new `CloseApproach`.
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
         self._designation = str(info[0])
-        #convert time using helper; None if missing
+        # convert time using helper; None if missing
         self.time = cd_to_datetime(info[3]) if info[3] else None
-        #distance and velocity are rounded to two decimal places
+        # distance and velocity are rounded to two decimal places
         self.distance = round(float(info[4]), 2) if float(info[4]) else None
         self.velocity = round(float(info[7]), 2) if float(info[7]) else None
 
@@ -121,14 +122,13 @@ class CloseApproach:
         """Return `str(self)`."""
         return f"On {self.time_str}, a NEO {self.neo.fullname} approaches Earth at a distance of {self.distance} au and a velocity of {self.velocity} km/s and is {'' if self.neo.hazardous else 'not '}hazardous."
 
-
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
         return (f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, "
                 f"velocity={self.velocity:.2f}, neo={self.neo!r})")
 
     def serialize(self):
-        '''Return a dictionary representation of the Close Approach for CSV/JSON output.'''
+        """Return a dictionary representation of the Close Approach for CSV/JSON output."""
         return {
             'datetime_utc': datetime_to_str(self.time),
             'distance_au': self.distance,

@@ -34,8 +34,8 @@ def datetime_to_str(dt):
 
     The default string representation of a datetime includes seconds; however,
     our data isn't that precise, so this function only formats the year, month,
-    date, hour, and minute values. Additionally, this function provides the date
-    in the usual ISO 8601 YYYY-MM-DD format to avoid ambiguities with
+    date, hour, and minute values. Additionally, this function provides the
+    date in the usual ISO 8601 YYYY-MM-DD format to avoid ambiguities with
     locale-specific month names.
 
     :param dt: A naive Python datetime.
