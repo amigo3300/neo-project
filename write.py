@@ -64,9 +64,9 @@ def write_to_json(results, filename):
     for row in data:
         try:
             diameter = float(row['neo']['diameter_km'])
-            row['neo']['diameter_km'] = diameter if not math.isnan(diameter) else None
+            row['neo']['diameter_km'] = diameter if not math.isnan(diameter) else float('nan')
         except ValueError:
-            row['neo']['diameter_km'] = None
+            row['neo']['diameter_km'] = float('nan')
         row['neo']['potentially_hazardous'] = (
                 row['neo']['potentially_hazardous'].strip().lower() == 'true'
         )
